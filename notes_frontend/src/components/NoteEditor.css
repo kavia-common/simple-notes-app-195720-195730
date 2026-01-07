@@ -1,0 +1,54 @@
+.Editor {
+  position: sticky;
+  top: 86px;
+  align-self: start;
+}
+
+.Editor__card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-md);
+  padding: 18px;
+}
+
+.Editor__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.Editor__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 750;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.Editor__hint {
+  margin: 6px 0 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.Editor__form {
+  margin-top: 14px;
+  display: grid;
+  gap: 14px;
+}
+
+.Editor__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+@media (max-width: 920px) {
+  .Editor {
+    position: static;
+  }
+}

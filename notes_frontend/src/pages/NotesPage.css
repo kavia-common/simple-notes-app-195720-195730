@@ -1,0 +1,177 @@
+.NotesApp {
+  min-height: 100vh;
+  background: radial-gradient(1200px 500px at 20% 0%, rgba(59, 130, 246, 0.10), transparent 60%),
+    radial-gradient(900px 480px at 90% 10%, rgba(6, 182, 212, 0.10), transparent 55%),
+    var(--bg);
+  color: var(--text);
+}
+
+.NotesMain {
+  padding: 22px 0 40px 0;
+}
+
+.NotesMain__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.Panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow-md);
+  padding: 16px;
+}
+
+.Panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.Panel__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.Panel__subtitle {
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.Button {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease, border-color 120ms ease,
+    color 120ms ease, opacity 120ms ease;
+}
+
+.Button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.Button--small {
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.Button--primary {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 1), rgba(6, 182, 212, 1));
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(59, 130, 246, 0.20);
+}
+
+.Button--primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px rgba(59, 130, 246, 0.25);
+}
+
+.Button--secondary {
+  background: rgba(100, 116, 139, 0.12);
+  color: var(--text);
+  border-color: rgba(100, 116, 139, 0.20);
+}
+
+.Button--secondary:hover:not(:disabled) {
+  background: rgba(100, 116, 139, 0.16);
+}
+
+.Button--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.Button--ghost:hover:not(:disabled) {
+  background: rgba(59, 130, 246, 0.06);
+  border-color: rgba(59, 130, 246, 0.28);
+}
+
+.Button--danger {
+  background: rgba(239, 68, 68, 0.10);
+  color: rgba(239, 68, 68, 1);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.Button--danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.14);
+}
+
+.Alert {
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border: 1px solid;
+}
+
+.Alert__title {
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.Alert__body {
+  margin-top: 6px;
+  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+.Alert__body--small {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.Alert--error {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.Skeleton {
+  display: grid;
+  gap: 10px;
+  padding: 6px 2px 2px 2px;
+}
+
+.Skeleton__line {
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.06), rgba(15, 23, 42, 0.10), rgba(15, 23, 42, 0.06));
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+.Skeleton__line--lg {
+  height: 18px;
+  width: 55%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 920px) {
+  .NotesMain__inner {
+    grid-template-columns: 1fr;
+  }
+}
