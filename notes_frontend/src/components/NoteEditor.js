@@ -34,7 +34,8 @@ export default function NoteEditor({
   }, [start.title, start.content]);
 
   const titleError = touched && title.trim().length === 0 ? 'Title is required.' : '';
-  const isValid = title.trim().length > 0;
+  const contentError = touched && content.trim().length === 0 ? 'Content is required.' : '';
+  const isValid = title.trim().length > 0 && content.trim().length > 0;
 
   const heading = mode === 'edit' ? 'Edit note' : 'New note';
   const submitLabel = mode === 'edit' ? 'Save changes' : 'Create note';
@@ -43,7 +44,9 @@ export default function NoteEditor({
     e.preventDefault();
     setTouched(true);
     if (!isValid || isSaving) return;
-    onSubmit({ title: title.trim(), content });
+
+    // Keep frontend validation aligned with backend constraints (content min_length=1).
+    onSubmit({ title: title.trim(), content: content.trim() });
   }
 
   return (
@@ -93,10 +96,18 @@ export default function NoteEditor({
               className="Field__textarea"
               value={content}
               onChange={(e) => setContent(e.target.value)}
+              onBlur={() => setTouched(true)}
               placeholder="Write your note..."
               disabled={isSaving}
               rows={10}
+              aria-invalid={Boolean(contentError)}
+              aria-describedby={contentError ? 'content-error' : undefined}
             />
+            {contentError ? (
+              <span id="content-error" className="Field__error">
+                {contentError}
+              </span>
+            ) : null}
           </label>
 
           <div className="Editor__actions">
