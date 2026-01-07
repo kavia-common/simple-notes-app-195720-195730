@@ -1,6 +1,32 @@
 const DEFAULT_BASE_URL = 'http://localhost:3001';
 
 /**
+ * Try to infer the backend base URL from the current browser location.
+ *
+ * In hosted environments, the frontend is typically served on port 3000 and the backend on 3001
+ * under the same hostname. Using localhost in the browser would incorrectly target the user's
+ * machine, causing "Failed to fetch".
+ */
+function inferBaseUrlFromWindow() {
+  // window is undefined in tests/SSR; keep this check very defensive.
+  if (typeof window === 'undefined' || !window.location) return null;
+
+  try {
+    const current = new URL(window.location.href);
+
+    // Only override the port when we have an explicit port (typical in dev/preview).
+    // If there is no port, we can't safely infer "3001" without breaking prod domains.
+    if (!current.port) return null;
+
+    const inferred = new URL(current.origin);
+    inferred.port = '3001';
+    return inferred.origin;
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Normalize an HTTP error into a user-friendly Error instance.
  * Keeps server-provided details when available.
  */
@@ -32,8 +58,16 @@ async function safeJson(response) {
 
 function getBaseUrl() {
   // CRA supports REACT_APP_* variables.
-  // If not provided, it falls back to localhost for local development.
-  return process.env.REACT_APP_NOTES_API_BASE_URL || DEFAULT_BASE_URL;
+  // 1) Prefer explicit env override.
+  const envBase = process.env.REACT_APP_NOTES_API_BASE_URL;
+  if (envBase && String(envBase).trim()) return String(envBase).trim();
+
+  // 2) Hosted environment fallback: derive backend from current origin (swap port 3000 -> 3001).
+  const inferred = inferBaseUrlFromWindow();
+  if (inferred) return inferred;
+
+  // 3) Local development fallback.
+  return DEFAULT_BASE_URL;
 }
 
 /**
